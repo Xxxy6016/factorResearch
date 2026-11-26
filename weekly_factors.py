@@ -222,7 +222,10 @@ def export_weeks(data_dir, start, end, window, output):
 
 def main():
     parser = argparse.ArgumentParser(description="计算并导出全 A 股周频隔夜相关性因子")
-    parser.add_argument("--data-dir", type=Path, default=HERE / "Tushare数据")
+    default_data = HERE / "Tushare数据"
+    if not default_data.is_dir():
+        default_data = HERE.parent / "Tushare- data"
+    parser.add_argument("--data-dir", type=Path, default=default_data)
     parser.add_argument("--start", type=parse_date, default="20230101")
     parser.add_argument("--end", type=parse_date, default="20251231")
     parser.add_argument("--window", type=int, choices=(21, 60), default=60)
